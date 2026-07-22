@@ -84,18 +84,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "No ICOG, tecnologia de ponta, exames precisos e uma equipe médica especializada cuidam da sua visão em Palmas – TO.",
       },
-      { property: "og:title", content: "ICOG — Instituto de Catarata e Oftalmologia" },
+      { property: "og:title", content: "ICOG — Instituto de Catarata e Oftalmologia | Palmas TO" },
       {
         property: "og:description",
         content:
-          "Consultas, exames, laudos e cirurgias oftalmológicas em Palmas – TO. Agende sua consulta no ICOG.",
+          "No ICOG, tecnologia de ponta, exames precisos e uma equipe médica especializada cuidam da sua visão em Palmas – TO.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "ICOG — Instituto de Catarata e Oftalmologia | Palmas TO" },
+      { name: "twitter:description", content: "No ICOG, tecnologia de ponta, exames precisos e uma equipe médica especializada cuidam da sua visão em Palmas – TO." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/94d80382-5abf-4532-9219-b6a7e60404d9/id-preview-d4e074e2--a0d3072b-148b-42c6-8c8f-c429f48668d5.lovable.app-1784749362114.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/94d80382-5abf-4532-9219-b6a7e60404d9/id-preview-d4e074e2--a0d3072b-148b-42c6-8c8f-c429f48668d5.lovable.app-1784749362114.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: faviconIcog, type: "image/png" },
       { rel: "apple-touch-icon", href: faviconIcog },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
