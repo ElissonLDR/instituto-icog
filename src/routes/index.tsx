@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Phone,
-  MessageCircle,
   Eye,
   Microscope,
   FileText,
@@ -10,46 +9,59 @@ import {
   MapPin,
   Instagram,
   Facebook,
-  ArrowRight,
   Menu,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
-import consultorio1 from "@/assets/consultorio/consultorio-1.png";
-import consultorio2 from "@/assets/consultorio/consultorio-2.png";
-import consultorio3 from "@/assets/consultorio/consultorio-3.png";
-import consultorio4 from "@/assets/consultorio/consultorio-4.png";
-import logoIcog from "@/assets/brand/logo-icog-horizontal-branco.png";
-import logoTreTo from "@/assets/convenios/tre-to.png";
-import logoPostalSaude from "@/assets/convenios/postal-saude.png";
-import logoServir from "@/assets/convenios/servir.png";
-import logoIpasgu from "@/assets/convenios/ipasgu.png";
-import drRafael from "@/assets/equipe/dr-rafael-lopes.png";
-import drRafaelTerno from "@/assets/equipe/dr-rafael-lopes-terno.png";
-import drThiago from "@/assets/equipe/dr-thiago-nogueira.png";
-import draUlliane from "@/assets/equipe/dra-ulliane-sena.png";
-import imgHero from "@/assets/imagens/imagem-hero.webp";
-import bgEye from "@/assets/imagens/bg.png";
-import bgEsquerda from "@/assets/imagens/bg-esquerda.png";
-import bg2 from "@/assets/imagens/bg-2.png";
-import imgSecaoCirurgias from "@/assets/imagens/imagem-secao-cirurgias.webp";
-import imgOlhoAzul from "@/assets/imagens/olho-azul.png";
-import imgOlhoCatarata from "@/assets/imagens/olho-catarata.png";
-import imgOlhoCastanho from "@/assets/imagens/olho-castanho.png";
-import imgCirurgiaLoupes from "@/assets/imagens/cirurgia-loupes.jpg";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import consultorio1 from "@/assets/6-consultorio/consultorio-1.png";
+import consultorio2 from "@/assets/6-consultorio/consultorio-2.png";
+import consultorio3 from "@/assets/6-consultorio/consultorio-3.png";
+import consultorio4 from "@/assets/6-consultorio/consultorio-4.png";
+import logoIcog from "@/assets/shared/brand/logo-icog-horizontal-branco.png";
+import logoTreTo from "@/assets/4-convenios/tre-to.png";
+import logoPostalSaude from "@/assets/4-convenios/postal-saude.png";
+import logoServir from "@/assets/4-convenios/servir.png";
+import logoIpasgu from "@/assets/4-convenios/ipasgu.png";
+import drRafael from "@/assets/5-equipe/dr-rafael-lopes.png";
+import drRafaelTerno from "@/assets/5-equipe/dr-rafael-lopes-terno.png";
+import drThiago from "@/assets/5-equipe/dr-thiago-nogueira.png";
+import draUlliane from "@/assets/5-equipe/dra-ulliane-sena.png";
+import imgHero from "@/assets/1-hero/imagem-hero.webp";
+import bgEye from "@/assets/shared/bg.png";
+import bgEsquerda from "@/assets/1-hero/bg-esquerda.png";
+import bg2 from "@/assets/2-cirurgias/bg-2.png";
+import imgSecaoCirurgias from "@/assets/2-cirurgias/imagem-secao-cirurgias.webp";
+import imgAtendimentoConsultorio from "@/assets/3-pilares/atendimento-consultorio.png";
+import imgRealizandoExames from "@/assets/3-pilares/realizando-exames.png";
+import imgLaudoOftalmologico from "@/assets/3-pilares/laudo-oftalmologico.png";
+import imgCirurgias from "@/assets/3-pilares/cirurgias.png";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
 });
 
-const WHATSAPP_URL = "https://wa.me/556392580225";
+const WHATSAPP_NUMBER = "556392580225";
+const WHATSAPP_DEFAULT_MSG =
+  "Olá, gostaria de agendar uma consulta no ICOG, por favor.";
+
+function whatsappUrl(message = WHATSAPP_DEFAULT_MSG) {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+const WHATSAPP_URL = whatsappUrl();
 
 const consultorioImages = [
   { src: consultorio1, alt: "Consultório ICOG — ambiente 1" },
@@ -59,10 +71,10 @@ const consultorioImages = [
 ];
 
 const pillarImages = [
-  { src: imgOlhoAzul, alt: "Consultas oftalmológicas" },
-  { src: imgCirurgiaLoupes, alt: "Exames oftalmológicos" },
-  { src: imgOlhoCatarata, alt: "Laudos especiais" },
-  { src: imgOlhoCastanho, alt: "Cirurgias oftalmológicas" },
+  { src: imgAtendimentoConsultorio, alt: "Consultas oftalmológicas" },
+  { src: imgRealizandoExames, alt: "Exames oftalmológicos" },
+  { src: imgLaudoOftalmologico, alt: "Laudos especiais" },
+  { src: imgCirurgias, alt: "Cirurgias oftalmológicas" },
 ];
 
 const convenioLogos = [
@@ -172,6 +184,19 @@ function initials(name: string) {
 
 function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [galleryApi, setGalleryApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    if (!galleryApi || !galleryOpen) return;
+    galleryApi.scrollTo(galleryIndex, true);
+  }, [galleryApi, galleryIndex, galleryOpen]);
+
+  const openGallery = (index: number) => {
+    setGalleryIndex(index);
+    setGalleryOpen(true);
+  };
 
   const nav = [
     { href: "#home", label: "Home" },
@@ -228,7 +253,28 @@ function LandingPage() {
     },
   ];
 
-  const pillars = ["Consultas", "Exames", "Laudos", "Cirurgias"];
+  const pillars = [
+    {
+      title: "Consultas",
+      cta: "Agende sua consulta",
+      msg: "Olá, gostaria de agendar uma consulta no ICOG, por favor.",
+    },
+    {
+      title: "Exames",
+      cta: "Agende seu exame",
+      msg: "Olá, gostaria de agendar um exame no ICOG, por favor.",
+    },
+    {
+      title: "Laudos",
+      cta: "Solicite seu laudo",
+      msg: "Olá, gostaria de solicitar um laudo no ICOG, por favor.",
+    },
+    {
+      title: "Cirurgias",
+      cta: "Agende sua avaliação",
+      msg: "Olá, gostaria de agendar uma avaliação cirúrgica no ICOG, por favor.",
+    },
+  ];
 
   return (
     <div id="home" className="min-h-screen relative">
@@ -262,10 +308,13 @@ function LandingPage() {
             ))}
           </nav>
 
-          <div className="hidden md:flex items-center gap-2 text-ink font-semibold">
+          <a
+            href="tel:+556392580225"
+            className="hidden md:flex items-center gap-2 text-ink font-semibold hover:text-accent transition-colors"
+          >
             <Phone className="h-4 w-4 text-accent" />
             <span className="text-sm">(63) 9258-0225 – Palmas</span>
-          </div>
+          </a>
 
           <button
             aria-label="Abrir menu"
@@ -289,65 +338,70 @@ function LandingPage() {
                   {n.label}
                 </a>
               ))}
-              <div className="flex items-center gap-2 text-ink font-semibold pt-2 border-t border-primary/20">
+              <a
+                href="tel:+556392580225"
+                className="flex items-center gap-2 text-ink font-semibold pt-2 border-t border-primary/20 hover:text-accent transition-colors"
+              >
                 <Phone className="h-4 w-4 text-accent" />
                 <span className="text-sm">(63) 9258-0225 – Palmas</span>
-              </div>
+              </a>
             </nav>
           </div>
         )}
       </header>
 
       {/* Hero */}
-      <section className="relative h-[90vh] overflow-hidden rounded-b-3xl bg-offwhite">
-        <div
-          className="absolute inset-0 bg-cover bg-left bg-no-repeat"
-          style={{ backgroundImage: `url(${bgEsquerda})` }}
-          aria-hidden
-        />
-
-        {/* Imagem — 50% da tela, fora do container de conteúdo */}
-        <div className="absolute inset-y-0 right-0 z-[1] hidden w-1/2 items-center justify-center p-8 lg:flex">
-          <img
-            src={imgHero}
-            alt="ICOG — visão e cuidado oftalmológico"
-            className="max-h-[70%] max-w-[70%] h-auto w-auto object-contain"
+      <div className="bg-offwhite">
+        <section className="relative overflow-hidden rounded-b-3xl lg:h-[min(70svh,820px)] lg:min-h-[700px]">
+          <div
+            className="absolute inset-0 bg-cover bg-left bg-no-repeat"
+            style={{ backgroundImage: `url(${bgEsquerda})` }}
+            aria-hidden
           />
-        </div>
 
-        {/* Texto — container da página, 2 colunas (direita só reserva espaço) */}
-        <div className="relative z-[2] mx-auto grid h-full max-w-7xl grid-cols-1 items-center gap-10 px-4 py-14 sm:px-6 md:py-24 lg:grid-cols-2 lg:gap-16 lg:px-8">
-          <div className="fade-up">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] !text-[#E6EEF9] drop-shadow-[0_0_40px_rgba(61,108,187,0.35)]">
-              Enxergue o mundo com mais clareza
-            </h1>
-            <p className="mt-6 text-lg text-muted-ink max-w-xl leading-relaxed">
-              No ICOG, tecnologia de ponta, exames precisos e uma equipe médica especializada
-              trabalham juntos para cuidar da sua visão com a excelência que os seus olhos merecem.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener" className="btn-cta">
-                Agende sua consulta em Palmas <ArrowRight className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-
-          <div className="relative mx-auto flex aspect-square w-full max-w-sm items-center justify-center lg:invisible lg:pointer-events-none" aria-hidden="true">
+          {/* Imagem — desktop: 50% da tela */}
+          <div className="absolute inset-y-0 right-0 z-[1] hidden w-1/2 items-center justify-start pl-2 pr-6 py-8 lg:flex">
             <img
               src={imgHero}
-              alt=""
-              className="max-h-[70%] max-w-[70%] object-contain lg:hidden"
+              alt="ICOG — visão e cuidado oftalmológico"
+              className="h-[99%] w-auto max-w-full object-contain"
             />
           </div>
-        </div>
-      </section>
+
+          {/* Texto — container da página */}
+          <div className="relative z-[2] mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-4 py-12 sm:px-6 sm:py-16 lg:h-full lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
+            <div className="fade-up text-center lg:text-left">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] !text-[#E6EEF9] drop-shadow-[0_0_40px_rgba(61,108,187,0.35)]">
+                Enxergue o mundo com mais clareza
+              </h1>
+              <p className="mt-6 text-lg text-muted-ink max-w-xl leading-relaxed mx-auto lg:mx-0">
+                No ICOG, tecnologia de ponta, exames precisos e uma equipe médica especializada
+                trabalham juntos para cuidar da sua visão com a excelência que os seus olhos merecem.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener" className="btn-cta">
+                  Agende sua consulta em Palmas <WhatsAppIcon className="btn-cta-wa h-4 w-4 shrink-0" />
+                </a>
+              </div>
+            </div>
+
+            <div className="relative mx-auto flex w-full max-w-xs items-center justify-center sm:max-w-sm lg:invisible lg:pointer-events-none lg:max-w-lg">
+              <img
+                src={imgHero}
+                alt="ICOG — visão e cuidado oftalmológico"
+                className="h-auto w-full object-contain lg:hidden"
+              />
+            </div>
+          </div>
+        </section>
+      </div>
 
       {/* Serviços — seção 2 */}
       <section id="servicos" className="section-light py-16 md:py-24 relative">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((s) => (
-              <article key={s.title} className="flex flex-col">
+              <article key={s.title} className="flex flex-col items-center text-center sm:items-start sm:text-left">
                 <div className="h-12 w-12 rounded-xl grid place-items-center bg-primary/10 text-primary mb-4">
                   <s.icon className="h-6 w-6" />
                 </div>
@@ -361,25 +415,25 @@ function LandingPage() {
 
       {/* Cirurgias — seção 3 */}
       <section id="cirurgias" className="section-light relative overflow-visible pt-6 md:pt-10 pb-24 md:pb-32">
-        {/* Imagem — 50% da tela, fora do container de conteúdo */}
-        <div className="absolute inset-y-0 right-0 z-[3] hidden w-1/2 items-center justify-start pl-0 pr-4 lg:flex">
-          <img
-            src={imgSecaoCirurgias}
-            alt="Cirurgias oftalmológicas no ICOG"
-            className="h-auto w-[120%] max-w-none max-h-full origin-left object-contain object-left"
-            loading="lazy"
-          />
-        </div>
-
         {/* Conteúdo — container da página, 2 colunas (direita só reserva espaço) */}
         <div className="relative z-[1] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Imagem — 50% da coluna direita, centralizada no box */}
+          <div className="pointer-events-none absolute inset-y-0 right-4 z-[3] hidden w-1/2 items-center justify-center sm:right-6 lg:flex lg:right-8">
+            <img
+              src={imgSecaoCirurgias}
+              alt="Cirurgias oftalmológicas no ICOG"
+              className="h-auto max-h-[110%] w-auto max-w-[115%] scale-110 object-contain"
+              loading="lazy"
+            />
+          </div>
+
           <div className="border-gradient-icog">
             <div
               className="bg-eye overflow-hidden rounded-[calc(1.5rem-2px)]"
               style={{ backgroundImage: `url(${bg2})` }}
             >
-              <div className="grid min-h-[min(80svh,680px)] grid-cols-1 items-center lg:grid-cols-2">
-                <div className="flex flex-col justify-center px-4 py-8 sm:px-6 md:py-10 lg:px-10 xl:px-16">
+              <div className="grid min-h-[min(70svh,560px)] grid-cols-1 items-center lg:grid-cols-2">
+                <div className="flex flex-col items-center justify-center px-4 py-8 text-center sm:px-6 md:py-10 lg:items-start lg:px-10 lg:text-left xl:px-16">
                   <h2 className="text-3xl sm:text-4xl font-bold !text-[#E6EEF9] leading-tight">
                     Cirurgias oftalmológicas com segurança e alta tecnologia
                   </h2>
@@ -394,18 +448,15 @@ function LandingPage() {
                     rel="noopener"
                     className="btn-cta mt-8"
                   >
-                    Agende sua avaliação cirúrgica <ArrowRight className="h-4 w-4" />
+                    Agende sua avaliação cirúrgica <WhatsAppIcon className="btn-cta-wa h-4 w-4 shrink-0" />
                   </a>
                 </div>
 
-                <div
-                  className="relative mx-auto flex aspect-square w-full max-w-md items-center justify-center p-6 lg:invisible lg:pointer-events-none"
-                  aria-hidden="true"
-                >
+                <div className="relative mx-auto flex w-full items-center justify-center px-4 pb-6 lg:invisible lg:pointer-events-none lg:aspect-square lg:max-w-md lg:p-6">
                   <img
                     src={imgSecaoCirurgias}
-                    alt=""
-                    className="max-h-full max-w-full object-contain lg:hidden"
+                    alt="Cirurgias oftalmológicas no ICOG"
+                    className="h-auto w-full object-contain lg:hidden lg:max-h-[85%] lg:max-w-[85%]"
                     loading="lazy"
                   />
                 </div>
@@ -416,10 +467,11 @@ function LandingPage() {
       </section>
 
       {/* Tudo para sua visão — seção 4 */}
-      <section
-        className="content-panel-dark bg-eye py-16 md:py-24"
-        style={{ backgroundImage: `url(${bgEye})` }}
-      >
+      <div className="bg-offwhite">
+        <section
+          className="content-panel-dark bg-eye overflow-hidden rounded-3xl py-16 md:py-24"
+          style={{ backgroundImage: `url(${bgEye})` }}
+        >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl sm:text-4xl font-bold text-navy max-w-3xl mx-auto">
@@ -431,31 +483,39 @@ function LandingPage() {
             </p>
           </div>
 
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {pillars.map((p, i) => (
-              <div key={p} className="flex flex-col items-center text-center">
-                <div className="mb-5 h-52 w-full overflow-hidden rounded-2xl sm:h-56 md:h-60">
-                  <img
-                    src={pillarImages[i].src}
-                    alt={pillarImages[i].alt}
-                    className="h-full w-full object-cover object-center"
-                    loading="lazy"
-                  />
+              <article
+                key={p.title}
+                className="relative flex min-h-[294px] flex-col justify-end overflow-hidden rounded-2xl sm:min-h-[336px] lg:min-h-[364px]"
+              >
+                <img
+                  src={pillarImages[i].src}
+                  alt={pillarImages[i].alt}
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                  loading="lazy"
+                />
+                <div
+                  className="absolute inset-0 bg-gradient-to-t from-deep via-deep/70 to-transparent"
+                  aria-hidden
+                />
+                <div className="relative z-[1] flex flex-col items-center px-4 pb-6 pt-24 text-center">
+                  <h3 className="text-xl font-bold !text-[#E6EEF9] drop-shadow-sm">{p.title}</h3>
+                  <a
+                    href={whatsappUrl(p.msg)}
+                    target="_blank"
+                    rel="noopener"
+                    className="btn-cta mt-4 !py-2 !px-4 !text-sm"
+                  >
+                    {p.cta} <WhatsAppIcon className="btn-cta-wa h-3.5 w-3.5 shrink-0" />
+                  </a>
                 </div>
-                <h3 className="text-lg font-bold text-navy">{p}</h3>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener"
-                  className="btn-cta mt-5 !py-2 !px-4 !text-sm"
-                >
-                  Agende sua consulta
-                </a>
-              </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
+      </div>
 
       {/* Convênios — seção 5 */}
       <section id="convenios" className="section-light py-16 md:py-24">
@@ -482,17 +542,18 @@ function LandingPage() {
               </div>
             ))}
           </div>
-          <div className="mt-10">
+      <div className="mt-10 flex justify-center">
             <a href={WHATSAPP_URL} target="_blank" rel="noopener" className="btn-cta">
-              Agende sua consulta em Palmas <ArrowRight className="h-4 w-4" />
+              Agende sua consulta em Palmas <WhatsAppIcon className="btn-cta-wa h-4 w-4 shrink-0" />
             </a>
           </div>
         </div>
       </section>
 
       {/* Depoimentos */}
-      <section id="depoimentos" className="py-16 md:py-24 relative">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="bg-offwhite">
+      <section id="depoimentos" className="section-glow overflow-hidden rounded-3xl py-16 md:py-24 relative px-10 sm:px-12 lg:px-16">
+        <div className="mx-auto max-w-7xl">
           <h2 className="text-3xl sm:text-4xl font-bold text-navy text-center">
             Quem já passou pelo ICOG recomenda
           </h2>
@@ -510,7 +571,7 @@ function LandingPage() {
             </p>
           </div>
 
-          <div className="mt-12 relative px-12">
+          <div className="mt-12 relative w-full">
             <Carousel
               opts={{
                 align: "start",
@@ -555,22 +616,25 @@ function LandingPage() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="disabled:opacity-40" />
-              <CarouselNext className="disabled:opacity-40" />
+              <CarouselPrevious className="-left-8 sm:-left-10 lg:-left-12 z-10 disabled:opacity-40" />
+              <CarouselNext className="-right-8 sm:-right-10 lg:-right-12 z-10 disabled:opacity-40" />
             </Carousel>
           </div>
         </div>
       </section>
+      </div>
 
       {/* Sobre */}
       <section id="sobre" className="section-light py-16 md:py-24">
         <div className="px-4 sm:px-6 lg:px-8">
-          <div
-            className="content-panel content-panel-dark bg-eye mx-auto max-w-7xl overflow-hidden rounded-3xl !p-0 shadow-[0_8px_32px_rgba(0,0,0,0.25)]"
-            style={{ backgroundImage: `url(${bgEye})` }}
-          >
-            <div className="grid lg:grid-cols-2 items-end">
-              <div className="px-4 pt-8 pb-8 sm:px-6 md:pt-10 lg:px-10 xl:px-12 lg:pt-12 lg:pb-10 self-start">
+          <div className="content-panel content-panel-dark relative mx-auto max-w-7xl !overflow-visible rounded-3xl !p-0 shadow-[0_8px_32px_rgba(0,0,0,0.25)]">
+            <div
+              className="bg-eye pointer-events-none absolute inset-0 overflow-hidden rounded-3xl"
+              style={{ backgroundImage: `url(${bgEye})` }}
+              aria-hidden
+            />
+            <div className="relative grid lg:grid-cols-2 items-stretch min-h-[min(60svh,520px)]">
+              <div className="flex flex-col items-center justify-center px-4 py-8 text-center sm:px-6 md:py-10 lg:items-start lg:px-10 lg:text-left xl:px-12">
                 <h2 className="text-3xl sm:text-4xl font-bold !text-[#E6EEF9] leading-tight">
                   Uma nova visão para a saúde ocular do Tocantins
                 </h2>
@@ -593,14 +657,14 @@ function LandingPage() {
                   </p>
                 </div>
                 <a href={WHATSAPP_URL} target="_blank" rel="noopener" className="btn-cta mt-8">
-                  Agende sua consulta <ArrowRight className="h-4 w-4" />
+                  Agende sua consulta <WhatsAppIcon className="btn-cta-wa h-4 w-4 shrink-0" />
                 </a>
               </div>
-              <div className="flex w-full self-end justify-center">
+              <div className="flex w-full items-end justify-center self-end -mt-16 sm:-mt-20 lg:-mt-32">
                 <img
                   src={drRafaelTerno}
                   alt="Dr. Rafael Lopes — fundador do ICOG"
-                  className="block h-auto w-full max-w-md object-contain object-bottom"
+                  className="block h-auto w-full max-w-[515px] object-contain object-bottom"
                 />
               </div>
             </div>
@@ -613,7 +677,7 @@ function LandingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl sm:text-4xl font-bold text-heading-light">
-              Sempre um ICOG perto de você
+              Venha cuidar da sua visão no ICOG
             </h2>
             <p className="mt-5 text-body-light max-w-2xl mx-auto leading-relaxed">
               Estamos prontos para atender com excelência e cuidado, perto de onde você está.
@@ -621,9 +685,9 @@ function LandingPage() {
           </div>
 
           <div className="mt-12 grid lg:grid-cols-2 gap-8 items-stretch">
-            <div className="bg-white/80 p-8 flex flex-col justify-center rounded-2xl">
+            <div className="bg-white/80 px-4 py-6 sm:p-8 flex flex-col justify-center rounded-2xl">
               <div className="flex items-center gap-2 text-primary font-semibold">
-                <MapPin className="h-5 w-5" />
+                <MapPin className="h-5 w-5 shrink-0" />
                 <span>Unidade Palmas – TO</span>
               </div>
               <p className="mt-4 text-body-light leading-relaxed">
@@ -634,9 +698,9 @@ function LandingPage() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener"
-                className="btn-cta mt-6 self-start"
+                className="btn-cta mt-6 w-full self-stretch sm:w-auto sm:self-start"
               >
-                Agende sua consulta em Palmas <ArrowRight className="h-4 w-4" />
+                Agende sua consulta em Palmas <WhatsAppIcon className="btn-cta-wa h-4 w-4 shrink-0" />
               </a>
             </div>
             <div className="overflow-hidden min-h-[320px]">
@@ -655,63 +719,77 @@ function LandingPage() {
       </section>
 
       {/* Equipe */}
-      <section id="equipe" className="section-glow overflow-hidden rounded-t-3xl rounded-b-3xl py-16 md:py-24">
+      <div className="bg-offwhite">
+      <section id="equipe" className="section-glow overflow-hidden rounded-3xl py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-navy text-center">
             Nossa Equipe de Especialistas
           </h2>
 
-          <div className="mt-14 space-y-16">
-            {team.map((m, i) => (
-              <article
-                key={m.name}
-                className={`grid lg:grid-cols-5 gap-8 items-center ${
-                  i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
-                }`}
-              >
-                <div className="lg:col-span-2 mx-auto w-full max-w-sm">
+          <div className="mt-12 space-y-12 lg:space-y-0">
+            {team.map((m, i) => {
+              const imageOnRight = i % 2 === 1;
+              return (
+                <article
+                  key={m.name}
+                  className="relative grid grid-cols-1 gap-6 justify-items-center text-center lg:grid-cols-12 lg:gap-10 lg:items-center lg:justify-items-stretch lg:text-left"
+                >
                   <div
-                    className="aspect-square rounded-full p-[3px]"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, #8BF7AD 0%, #2EC4B6 40%, #3D6CBB 100%)",
-                    }}
+                    className={`relative z-20 w-full max-w-[22.5rem] sm:max-w-[27.5rem] lg:mx-auto lg:max-w-xl lg:col-span-5 ${
+                      imageOnRight ? "lg:order-2" : "lg:order-1"
+                    }`}
                   >
-                    <div className="relative h-full w-full overflow-hidden rounded-full bg-deep">
-                      <img
-                        src={m.photo}
-                        alt=""
-                        aria-hidden
-                        className="absolute inset-0 h-full w-full scale-125 object-cover blur-2xl opacity-80"
-                      />
-                      <img
-                        src={m.photo}
-                        alt={m.name}
-                        className="relative z-[1] h-full w-full object-cover object-[center_20%]"
-                        loading="lazy"
-                      />
+                    <div
+                      className="aspect-square w-full rounded-full p-[3px]"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, #8BF7AD 0%, #2EC4B6 40%, #3D6CBB 100%)",
+                      }}
+                    >
+                      <div className="relative h-full w-full overflow-hidden rounded-full bg-deep">
+                        <img
+                          src={m.photo}
+                          alt=""
+                          aria-hidden
+                          className="absolute inset-0 h-full w-full scale-125 object-cover blur-2xl opacity-80"
+                        />
+                        <img
+                          src={m.photo}
+                          alt={m.name}
+                          className="relative z-[1] h-full w-full object-cover object-[center_20%]"
+                          loading="lazy"
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="lg:col-span-3">
-                  <h3 className="text-2xl font-bold text-navy">{m.name}</h3>
-                  <p className="mt-2 text-accent font-semibold">{m.role}</p>
-                  <p className="mt-1 text-sm text-muted-ink">{m.crm}</p>
-                  <p className="mt-5 text-muted-ink leading-relaxed">{m.bio}</p>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener"
-                    className="btn-cta mt-6"
+
+                  <div
+                    className={`team-bio z-10 flex flex-col items-center text-center lg:items-start lg:text-left lg:col-span-7 ${
+                      imageOnRight
+                        ? "lg:order-1 team-bio-rtl"
+                        : "lg:order-2 team-bio-ltr"
+                    }`}
                   >
-                    Agende sua consulta em Palmas <ArrowRight className="h-4 w-4" />
-                  </a>
-                </div>
-              </article>
-            ))}
+                    <h3 className="text-2xl sm:text-3xl font-bold text-navy">{m.name}</h3>
+                    <p className="mt-2 text-accent font-semibold">{m.role}</p>
+                    <p className="mt-1 text-sm text-muted-ink">{m.crm}</p>
+                    <p className="mt-6 text-muted-ink leading-relaxed">{m.bio}</p>
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener"
+                      className="btn-cta mt-6 text-sm whitespace-nowrap !px-4 sm:!px-6"
+                    >
+                      Agende sua consulta em Palmas <WhatsAppIcon className="btn-cta-wa h-4 w-4 shrink-0" />
+                    </a>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
+      </div>
 
       {/* Consultório */}
       <section id="consultorio" className="section-light py-16 md:py-24">
@@ -720,25 +798,63 @@ function LandingPage() {
             Conheça nosso consultório
           </h2>
           <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-3">
-            {consultorioImages.map((img) => (
-              <figure key={img.src} className="relative aspect-square overflow-hidden rounded-2xl bg-white/50">
+            {consultorioImages.map((img, index) => (
+              <button
+                key={img.src}
+                type="button"
+                onClick={() => openGallery(index)}
+                className="group relative aspect-square cursor-pointer overflow-hidden rounded-2xl text-left transition-transform hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                aria-label={`Ampliar: ${img.alt}`}
+              >
                 <img
                   src={img.src}
                   alt={img.alt}
-                  className="img-fit"
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   loading="lazy"
                 />
-              </figure>
+              </button>
             ))}
           </div>
         </div>
       </section>
 
+      <Dialog open={galleryOpen} onOpenChange={setGalleryOpen}>
+        <DialogContent className="max-w-[min(96vw,1100px)] border-none bg-transparent p-0 shadow-none sm:rounded-2xl [&>button]:right-2 [&>button]:top-2 [&>button]:z-20 [&>button]:rounded-full [&>button]:bg-deep/80 [&>button]:p-2 [&>button]:text-navy [&>button]:opacity-100">
+          <DialogTitle className="sr-only">Galeria do consultório ICOG</DialogTitle>
+          <div className="relative">
+            <Carousel
+              setApi={setGalleryApi}
+              opts={{
+                loop: true,
+                startIndex: galleryIndex,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-0">
+                {consultorioImages.map((img) => (
+                  <CarouselItem key={img.src} className="pl-0 basis-full">
+                    <div className="flex max-h-[80vh] items-center justify-center overflow-hidden rounded-2xl">
+                      <img
+                        src={img.src}
+                        alt={img.alt}
+                        className="max-h-[80vh] max-w-full rounded-2xl object-contain"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2 sm:left-3 z-10" />
+              <CarouselNext className="right-2 sm:right-3 z-10" />
+            </Carousel>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* CTA Final */}
-      <section id="cta-final" className="section-light py-16 md:py-24">
-        <div className="px-4 sm:px-6 lg:px-8">
+      <section id="cta-final" className="section-light pt-2 md:pt-2.5 pb-16 md:pb-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div
-            className="content-panel content-panel-dark bg-eye text-center"
+            className="content-panel-dark bg-eye w-full overflow-hidden rounded-3xl px-5 py-8 text-center sm:px-8 sm:py-10 lg:px-10 lg:py-12"
             style={{ backgroundImage: `linear-gradient(rgba(7,14,26,0.72), rgba(7,14,26,0.72)), url(${bgEye})` }}
           >
             <ShieldCheck className="h-12 w-12 text-accent mx-auto drop-shadow-[0_0_20px_rgba(139,247,173,0.5)]" />
@@ -749,16 +865,17 @@ function LandingPage() {
               Agende agora sua consulta no ICOG e conte com uma equipe especializada e tecnologia de
               ponta para cuidar da sua visão.
             </p>
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener" className="btn-cta mt-8">
-              <MessageCircle className="h-5 w-5" /> Agende sua consulta pelo WhatsApp
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener" className="btn-cta mt-8 mx-auto text-sm sm:text-base whitespace-nowrap !px-4 sm:!px-6">
+              <WhatsAppIcon className="btn-cta-wa h-5 w-5 shrink-0" /> Agende sua consulta pelo WhatsApp
             </a>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-deep text-ink/75 py-12 border-t border-primary/20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-start gap-6 text-sm">
+      <div className="bg-offwhite">
+      <footer className="bg-deep text-ink/75 overflow-hidden rounded-t-3xl py-12 border-t border-primary/20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center md:items-start gap-6 text-sm text-center md:text-left">
           <img
             src={logoIcog}
             alt="ICOG"
@@ -779,17 +896,14 @@ function LandingPage() {
               <a href="#" className="inline-flex items-center gap-1 hover:text-accent transition-colors">
                 <Facebook className="h-4 w-4" /> Facebook
               </a>
-              <span className="opacity-40">|</span>
-              <a href="#" className="hover:text-accent transition-colors">
-                Política de Privacidade
-              </a>
             </div>
             <p className="text-xs opacity-70 text-center md:text-right">
-              Copyright © 2025. Todos os direitos reservados.
+              Copyright © 2026. Todos os direitos reservados.
             </p>
           </div>
         </div>
       </footer>
+      </div>
 
       {/* WhatsApp Float */}
       <a

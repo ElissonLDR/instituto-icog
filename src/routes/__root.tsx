@@ -10,7 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import faviconIcog from "../assets/brand/favicon-icog.png?url";
+import faviconIcog from "../assets/shared/brand/favicon-icog.png?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
