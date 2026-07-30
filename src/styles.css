@@ -58,6 +58,12 @@
   }
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+  @media (min-width: 640px) {
+    html {
+      scroll-padding-top: 6.5rem;
+    }
   }
   body {
     background-color: var(--color-background);
@@ -71,6 +77,20 @@
     font-family: var(--font-display);
     color: var(--color-navy);
     letter-spacing: -0.01em;
+  }
+  a,
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  label[for],
+  select {
+    cursor: pointer;
+  }
+  a:disabled,
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
   }
   ::selection {
     background: rgba(139, 247, 173, 0.25);
@@ -90,6 +110,7 @@
   font-weight: 600;
   color: #061018;
   background: var(--gradient-cta);
+  cursor: pointer;
   transition: transform 0.2s ease, filter 0.2s ease;
   &:hover {
     transform: translateY(-2px);
@@ -121,6 +142,7 @@
   background: rgba(15, 28, 46, 0.6);
   border: 1.5px solid rgba(139, 247, 173, 0.45);
   backdrop-filter: blur(8px);
+  cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
   &:hover {
     transform: translateY(-2px);
