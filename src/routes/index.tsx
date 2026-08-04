@@ -35,7 +35,10 @@ import imgHero from "@/assets/1-hero/imagem-hero.webp";
 import imgExameTela from "@/assets/campanha/2-procedimentos/exame-tela.png";
 import drRafael from "@/assets/campanha/3-equipe/dr-rafael-lopes.png";
 import drThiago from "@/assets/campanha/3-equipe/dr-thiago-nogueira.png";
-import draUlliane from "@/assets/campanha/3-equipe/dra-ulliane-sena.png";
+import draUlliane from "@/assets/campanha/3-equipe/dra-ulliane.jpg";
+import draRenata from "@/assets/campanha/3-equipe/dra-renata-bertazzi.jpg";
+import draLuiza from "@/assets/campanha/3-equipe/dra-luiza-carneiro-bertazzi.jpg";
+import draMillane from "@/assets/campanha/3-equipe/dra-millane-vieira-dos-santos.jpg";
 import logoTreTo from "@/assets/4-convenios/tre-to.png";
 import logoPostalSaude from "@/assets/4-convenios/postal-saude.png";
 import logoServir from "@/assets/4-convenios/servir.png";
@@ -92,13 +95,14 @@ const UNITS: Record<
     name: "Porto Nacional (TO)",
     shortName: "Porto Nacional",
     address:
-      "Q. 602 Sul, Avenida Joaquim Teotônio Segurado, 20, Plano Diretor Sul, Porto Nacional (TO)",
+      "Avenida Presidente John Kennedy, 1300, Setor Aeroporto, Porto Nacional – TO, CEP 77500-276",
     hours: "Seg a Sex: 8h às 18h / Sáb: 8h às 12h / Pronto atendimento 24h",
     phoneDisplay: "(63) 3363-4755",
     phoneTel: "+556333634755",
     whatsappLink:
       "https://api.whatsapp.com/message/JAJCCGVHWI6CD1?autoload=1&app_absent=0",
-    mapQuery: "Av+Joaquim+Teotonio+Segurado+20+Plano+Diretor+Sul+Porto+Nacional+TO",
+    mapQuery:
+      "Avenida+Presidente+John+Kennedy+1300+Setor+Aeroporto+Porto+Nacional+TO+77500-276",
   },
 };
 
@@ -127,6 +131,18 @@ const PROCEDURES = [
     what: "Cirurgia refrativa para reduzir a dependência de óculos.",
     solves: "Mais liberdade visual no dia a dia.",
   },
+  {
+    id: "retina",
+    title: "Cirurgia de Retina",
+    what: "Tratamento cirúrgico para doenças da retina.",
+    solves: "Preserva e recupera a visão em alterações retinianas.",
+  },
+  {
+    id: "cornea",
+    title: "Cirurgia de Córnea",
+    what: "Procedimentos para restabelecer a saúde da córnea.",
+    solves: "Recupera transparência e qualidade visual da córnea.",
+  },
 ] as const;
 
 type ProcedureId = (typeof PROCEDURES)[number]["id"];
@@ -149,6 +165,24 @@ const TEAM = [
     name: "Dra. Ulliane de Sena Rabelo",
     role: "Oftalmologista, Especialista em Glaucoma",
     crm: "CRM TO 4554, RQE 3787",
+  },
+  {
+    photo: draRenata,
+    name: "Dra. Renata Bertazzi",
+    role: "Especialista em Retina e Catarata",
+    crm: "CRM-TO 7.132 | RQE 3.562\nCRM-SP 195.613 | RQE 95.737",
+  },
+  {
+    photo: draLuiza,
+    name: "Dra. Luiza Carneiro Bertazzi",
+    role: "Oftalmologista",
+    crm: "CRM-SP 214.965 | RQE 137.761",
+  },
+  {
+    photo: draMillane,
+    name: "Dra. Millane Vieira dos Santos",
+    role: "Córnea, Catarata, Refrativa",
+    crm: "CRM/TO 6.516 | RQE 3.099",
   },
 ];
 
@@ -512,18 +546,19 @@ function CampanhaPage() {
               className="bg-eye overflow-hidden rounded-[calc(1.5rem-2px)]"
               style={{ backgroundImage: `url(${bg2})` }}
             >
-              <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-10 px-5 py-10 sm:px-8 md:py-12 lg:px-10 xl:px-12">
-                <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+              <div className="flex flex-col gap-8 px-5 py-10 sm:px-8 md:py-12 lg:px-10 xl:px-12">
+                <div className="flex flex-col items-center text-center max-w-2xl mx-auto">
                   <h2 className="text-3xl sm:text-4xl font-bold !text-[#E6EEF9] leading-tight">
                     Procedimentos que devolvem clareza
                   </h2>
-                  <p className="mt-5 text-muted-ink leading-relaxed max-w-md mx-auto lg:mx-0">
-                    Catarata, pterígio, glaucoma a laser e correção de grau: avaliações
-                    especializadas para indicar o tratamento certo com segurança e tecnologia.
+                  <p className="mt-5 text-muted-ink leading-relaxed">
+                    Catarata, pterígio, glaucoma a laser, correção de grau, retina e córnea:
+                    avaliações especializadas para indicar o tratamento certo com segurança e
+                    tecnologia.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   {PROCEDURES.map((p) => (
                     <article
                       key={p.id}
@@ -552,7 +587,7 @@ function CampanhaPage() {
         </div>
       </section>
 
-      {/* Equipe grid equilibrado */}
+      {/* Equipe carrossel */}
       <div className="bg-offwhite">
         <section
           id="equipe"
@@ -569,31 +604,48 @@ function CampanhaPage() {
               </p>
             </div>
 
-            <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {TEAM.map((m) => (
-                <article
-                  key={m.name}
-                  className="group flex flex-col rounded-2xl border border-primary/20 bg-deep/55 overflow-hidden backdrop-blur-sm transition-transform hover:-translate-y-1"
-                >
-                  <div className="relative aspect-[4/5] overflow-hidden bg-surface">
-                    <img
-                      src={m.photo}
-                      alt={m.name}
-                      className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-                      loading="lazy"
-                    />
-                    <div
-                      className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-deep/90 to-transparent"
-                      aria-hidden
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-5 text-center">
-                    <h3 className="text-lg font-bold !text-[#E6EEF9] leading-snug">{m.name}</h3>
-                    <p className="mt-2 text-sm font-semibold text-accent leading-snug">{m.role}</p>
-                    <p className="mt-1.5 text-xs text-muted-ink">{m.crm}</p>
-                  </div>
-                </article>
-              ))}
+            <div className="mt-12 relative w-full px-10 sm:px-12">
+              <Carousel
+                opts={{ align: "start", loop: false, slidesToScroll: 1 }}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-4 lg:-ml-8">
+                  {TEAM.map((m) => (
+                    <CarouselItem
+                      key={m.name}
+                      className="pl-4 lg:pl-8 basis-full sm:basis-1/2 lg:basis-1/3"
+                    >
+                      <article className="flex h-full flex-col rounded-2xl border border-primary/20 bg-deep/55 overflow-hidden backdrop-blur-sm">
+                        <div className="relative aspect-[4/5] overflow-hidden bg-surface">
+                          <img
+                            src={m.photo}
+                            alt={m.name}
+                            className="h-full w-full object-cover object-top"
+                            loading="lazy"
+                          />
+                          <div
+                            className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-deep/90 to-transparent"
+                            aria-hidden
+                          />
+                        </div>
+                        <div className="flex flex-1 flex-col p-5 text-center">
+                          <h3 className="text-lg font-bold !text-[#E6EEF9] leading-snug">
+                            {m.name}
+                          </h3>
+                          <p className="mt-2 text-sm font-semibold text-accent leading-snug">
+                            {m.role}
+                          </p>
+                          <p className="mt-1.5 text-xs text-muted-ink whitespace-pre-line">
+                            {m.crm}
+                          </p>
+                        </div>
+                      </article>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="-left-1 sm:-left-2 z-10 disabled:opacity-40" />
+                <CarouselNext className="-right-1 sm:-right-2 z-10 disabled:opacity-40" />
+              </Carousel>
             </div>
           </div>
         </section>
