@@ -111,37 +111,37 @@ const PROCEDURES = [
     id: "catarata",
     title: "Cirurgia de Catarata",
     what: "Substitui o cristalino opaco por lente intraocular.",
-    solves: "Restitui nitidez quando a catarata turva a visão.",
+    solves: "Melhora o borramento e nitidez, gera liberdade de óculos.",
   },
   {
     id: "pterigio",
     title: "Cirurgia de Pterígio",
     what: "Remove o tecido que cresce sobre a córnea.",
-    solves: "Alivia irritação e evita avanço sobre o eixo visual.",
+    solves: "Alivia irritação e vermelhidão, corrige a estética e melhora a visão.",
   },
   {
     id: "glaucoma",
     title: "Glaucoma a Laser",
     what: "Tratamento a laser para controlar a pressão ocular.",
-    solves: "Ajuda a preservar o nervo óptico e a visão.",
+    solves: "Diminui uso dos colírios, alívio dos sintomas e efeitos colaterais. Menos gastos com colírios.",
   },
   {
     id: "correcao",
     title: "Correção de Grau",
     what: "Cirurgia refrativa para reduzir a dependência de óculos.",
-    solves: "Mais liberdade visual no dia a dia.",
+    solves: "Cirurgia refrativa a laser para retirar os óculos, após os 23 anos de idade.",
   },
   {
     id: "retina",
     title: "Cirurgia de Retina",
     what: "Tratamento cirúrgico para doenças da retina.",
-    solves: "Preserva e recupera a visão em alterações retinianas.",
+    solves: "Tratamos com laser, injeção ou cirurgia, as doenças: diabetes, DMRI, descolamento, etc.",
   },
   {
     id: "cornea",
     title: "Cirurgia de Córnea",
     what: "Procedimentos para restabelecer a saúde da córnea.",
-    solves: "Recupera transparência e qualidade visual da córnea.",
+    solves: "Correção da visão por ceratocone, adaptação de lente de contato.",
   },
 ] as const;
 
@@ -549,7 +549,7 @@ function CampanhaPage() {
               <div className="flex flex-col gap-8 px-5 py-10 sm:px-8 md:py-12 lg:px-10 xl:px-12">
                 <div className="flex flex-col items-center text-center max-w-2xl mx-auto">
                   <h2 className="text-3xl sm:text-4xl font-bold !text-[#E6EEF9] leading-tight">
-                    Procedimentos que devolvem clareza
+                    Procedimentos que melhoram sua visão
                   </h2>
                   <p className="mt-5 text-muted-ink leading-relaxed">
                     Catarata, pterígio, glaucoma a laser, correção de grau, retina e córnea:
