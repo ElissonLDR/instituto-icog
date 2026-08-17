@@ -185,6 +185,12 @@ const TEAM = [
     role: "Córnea, Catarata, Refrativa",
     crm: "CRM/TO 6.516 | RQE 3.099",
   },
+  {
+    photo: drRonan,
+    name: "Dr. Ronan Marra Borges",
+    role: "Especialista em Catarata",
+    crm: "CRM-TO 8558 | RQE 3921",
+  },
 ];
 
 const PAINS = [
