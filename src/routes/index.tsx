@@ -39,6 +39,7 @@ import draUlliane from "@/assets/campanha/3-equipe/dra-ulliane.jpg";
 import draRenata from "@/assets/campanha/3-equipe/dra-renata-bertazzi.jpg";
 import draLuiza from "@/assets/campanha/3-equipe/dra-luiza-carneiro-bertazzi.jpg";
 import draMillane from "@/assets/campanha/3-equipe/dra-millane-vieira-dos-santos.jpg";
+import drRonan from "@/assets/campanha/3-equipe/dr-ronan-marra-borges.jpg.asset.json";
 import logoTreTo from "@/assets/4-convenios/tre-to.png";
 import logoPostalSaude from "@/assets/4-convenios/postal-saude.png";
 import logoServir from "@/assets/4-convenios/servir.png";
