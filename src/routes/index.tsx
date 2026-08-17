@@ -186,7 +186,7 @@ const TEAM = [
     crm: "CRM/TO 6.516 | RQE 3.099",
   },
   {
-    photo: drRonan,
+    photo: drRonan.url,
     name: "Dr. Ronan Marra Borges",
     role: "Especialista em Catarata",
     crm: "CRM-TO 8558 | RQE 3921",
