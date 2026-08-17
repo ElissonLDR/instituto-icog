@@ -39,6 +39,7 @@ import draUlliane from "@/assets/campanha/3-equipe/dra-ulliane.jpg";
 import draRenata from "@/assets/campanha/3-equipe/dra-renata-bertazzi.jpg";
 import draLuiza from "@/assets/campanha/3-equipe/dra-luiza-carneiro-bertazzi.jpg";
 import draMillane from "@/assets/campanha/3-equipe/dra-millane-vieira-dos-santos.jpg";
+import drRonan from "@/assets/campanha/3-equipe/dr-ronan-marra-borges.jpg.asset.json";
 import logoTreTo from "@/assets/4-convenios/tre-to.png";
 import logoPostalSaude from "@/assets/4-convenios/postal-saude.png";
 import logoServir from "@/assets/4-convenios/servir.png";
@@ -183,6 +184,12 @@ const TEAM = [
     name: "Dra. Millane Vieira dos Santos",
     role: "Córnea, Catarata, Refrativa",
     crm: "CRM/TO 6.516 | RQE 3.099",
+  },
+  {
+    photo: drRonan.url,
+    name: "Dr. Ronan Marra Borges",
+    role: "Especialista em Catarata",
+    crm: "CRM-TO 8558 | RQE 3921",
   },
 ];
 
