@@ -706,11 +706,11 @@ function CampanhaPage() {
               Estrutura pensada para indicar e realizar procedimentos com precisão e acolhimento.
             </p>
           </div>
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 justify-items-center max-w-4xl mx-auto">
             {DIFFERENTIALS.map((d) => (
               <article
                 key={d.title}
-                className="flex flex-col items-center text-center sm:items-start sm:text-left"
+                className="flex flex-col items-center text-center"
               >
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
                   <d.icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
