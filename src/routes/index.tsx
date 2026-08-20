@@ -9,7 +9,6 @@ import {
   Microscope,
   Users,
   Building2,
-  Siren,
 } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import {
@@ -44,6 +43,8 @@ import logoTreTo from "@/assets/4-convenios/tre-to.png";
 import logoPostalSaude from "@/assets/4-convenios/postal-saude.png";
 import logoServir from "@/assets/4-convenios/servir.png";
 import logoIpasgu from "@/assets/4-convenios/ipasgu.png";
+import logoBradesco from "@/assets/4-convenios/bradesco-saude.png.asset.json";
+import logoCaixa from "@/assets/4-convenios/caixa-saude.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -223,11 +224,6 @@ const DIFFERENTIALS = [
     title: "Duas unidades",
     text: "Atendimento em Palmas e Porto Nacional, perto de você.",
   },
-  {
-    icon: Siren,
-    title: "Pronto 24 horas",
-    text: "Suporte contínuo quando sua visão precisa de urgência.",
-  },
 ];
 
 const REVIEWS = [
@@ -262,6 +258,8 @@ const CONVENIO_LOGOS = [
   { src: logoTreTo, alt: "TRE-TO" },
   { src: logoServir, alt: "Servir" },
   { src: logoIpasgu, alt: "IPASGU" },
+  { src: logoBradesco.url, alt: "Bradesco Saúde" },
+  { src: logoCaixa.url, alt: "Caixa Saúde" },
 ];
 
 function GoogleIcon({ className = "h-5 w-5" }: { className?: string }) {
@@ -707,11 +705,11 @@ function CampanhaPage() {
               Estrutura pensada para indicar e realizar procedimentos com precisão e acolhimento.
             </p>
           </div>
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 justify-items-center max-w-4xl mx-auto">
             {DIFFERENTIALS.map((d) => (
               <article
                 key={d.title}
-                className="flex flex-col items-center text-center sm:items-start sm:text-left"
+                className="flex flex-col items-center text-center"
               >
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
                   <d.icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
@@ -813,7 +811,7 @@ function CampanhaPage() {
             Trabalhamos com os principais planos de saúde para tornar o cuidado com a visão mais
             acessível.
           </p>
-          <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-2 max-w-5xl mx-auto">
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
             {CONVENIO_LOGOS.map((logo) => (
               <div
                 key={logo.alt}
