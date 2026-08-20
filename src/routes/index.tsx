@@ -812,7 +812,7 @@ function CampanhaPage() {
             Trabalhamos com os principais planos de saúde para tornar o cuidado com a visão mais
             acessível.
           </p>
-          <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-2 max-w-5xl mx-auto">
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
             {CONVENIO_LOGOS.map((logo) => (
               <div
                 key={logo.alt}
