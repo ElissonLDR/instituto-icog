@@ -9,7 +9,6 @@ import {
   Microscope,
   Users,
   Building2,
-  Siren,
 } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import {
