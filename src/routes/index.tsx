@@ -44,6 +44,8 @@ import logoTreTo from "@/assets/4-convenios/tre-to.png";
 import logoPostalSaude from "@/assets/4-convenios/postal-saude.png";
 import logoServir from "@/assets/4-convenios/servir.png";
 import logoIpasgu from "@/assets/4-convenios/ipasgu.png";
+import logoBradesco from "@/assets/4-convenios/bradesco-saude.png.asset.json";
+import logoCaixa from "@/assets/4-convenios/caixa-saude.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -223,11 +225,6 @@ const DIFFERENTIALS = [
     title: "Duas unidades",
     text: "Atendimento em Palmas e Porto Nacional, perto de você.",
   },
-  {
-    icon: Siren,
-    title: "Pronto 24 horas",
-    text: "Suporte contínuo quando sua visão precisa de urgência.",
-  },
 ];
 
 const REVIEWS = [
@@ -262,6 +259,8 @@ const CONVENIO_LOGOS = [
   { src: logoTreTo, alt: "TRE-TO" },
   { src: logoServir, alt: "Servir" },
   { src: logoIpasgu, alt: "IPASGU" },
+  { src: logoBradesco.url, alt: "Bradesco Saúde" },
+  { src: logoCaixa.url, alt: "Caixa Saúde" },
 ];
 
 function GoogleIcon({ className = "h-5 w-5" }: { className?: string }) {
